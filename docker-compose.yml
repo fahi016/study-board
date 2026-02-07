@@ -1,4 +1,3 @@
-version: "3.9"
 
 services:
   # =========================
@@ -42,88 +41,88 @@ services:
       - studyboard-network
 
 
-  # =========================
-  # AUTH SERVICE
-  # =========================
-  auth-service:
-    build: ./backend/auth-service
-    container_name: studyboard-auth-service
-    restart: unless-stopped
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/studyboard
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      JWT_EXPIRATION: 86400000
-      SERVER_PORT: 8081
-    expose:
-      - "8081"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - studyboard-network
-
-  # =========================
-  # ROOM SERVICE
-  # =========================
-  room-service:
-    build: ./backend/room-service
-    container_name: studyboard-room-service
-    restart: unless-stopped
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/studyboard
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
-      SERVER_PORT: 8082
-    expose:
-      - "8082"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - studyboard-network
-
-  # =========================
-  # COLLABORATION SERVICE
-  # =========================
-  collaboration-service:
-    build: ./backend/collaboration-service
-    container_name: studyboard-collaboration-service
-    restart: unless-stopped
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/studyboard
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
-      SPRING_REDIS_HOST: redis
-      SPRING_REDIS_PORT: 6379
-      JWT_SECRET: ${JWT_SECRET}
-      SERVER_PORT: 8083
-    expose:
-      - "8083"
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    networks:
-      - studyboard-network
-
-  # =========================
-  # AI SERVICE
-  # =========================
-  ai-service:
-    build: ./backend/ai-service
-    container_name: studyboard-ai-service
-    restart: unless-stopped
-    environment:
-      CLAUDE_API_KEY: ${CLAUDE_API_KEY}
-      SERVER_PORT: 8084
-    expose:
-      - "8084"
-    networks:
-      - studyboard-network
+#  # =========================
+#  # AUTH SERVICE
+#  # =========================
+#  auth-service:
+#    build: ./backend/auth-service
+#    container_name: studyboard-auth-service
+#    restart: unless-stopped
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/studyboard
+#      SPRING_DATASOURCE_USERNAME: postgres
+#      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+#      JWT_SECRET: ${JWT_SECRET}
+#      JWT_EXPIRATION: 86400000
+#      SERVER_PORT: 8081
+#    expose:
+#      - "8081"
+#    depends_on:
+#      postgres:
+#        condition: service_healthy
+#    networks:
+#      - studyboard-network
+#
+#  # =========================
+#  # ROOM SERVICE
+#  # =========================
+#  room-service:
+#    build: ./backend/room-service
+#    container_name: studyboard-room-service
+#    restart: unless-stopped
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/studyboard
+#      SPRING_DATASOURCE_USERNAME: postgres
+#      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+#      JWT_SECRET: ${JWT_SECRET}
+#      SERVER_PORT: 8082
+#    expose:
+#      - "8082"
+#    depends_on:
+#      postgres:
+#        condition: service_healthy
+#    networks:
+#      - studyboard-network
+#
+#  # =========================
+#  # COLLABORATION SERVICE
+#  # =========================
+#  collaboration-service:
+#    build: ./backend/collaboration-service
+#    container_name: studyboard-collaboration-service
+#    restart: unless-stopped
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/studyboard
+#      SPRING_DATASOURCE_USERNAME: postgres
+#      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+#      SPRING_REDIS_HOST: redis
+#      SPRING_REDIS_PORT: 6379
+#      JWT_SECRET: ${JWT_SECRET}
+#      SERVER_PORT: 8083
+#    expose:
+#      - "8083"
+#    depends_on:
+#      postgres:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#    networks:
+#      - studyboard-network
+#
+#  # =========================
+#  # AI SERVICE
+#  # =========================
+#  ai-service:
+#    build: ./backend/ai-service
+#    container_name: studyboard-ai-service
+#    restart: unless-stopped
+#    environment:
+#      CLAUDE_API_KEY: ${CLAUDE_API_KEY}
+#      SERVER_PORT: 8084
+#    expose:
+#      - "8084"
+#    networks:
+#      - studyboard-network
 
   # =========================
   # API GATEWAY (PUBLIC)
@@ -133,19 +132,19 @@ services:
     container_name: studyboard-api-gateway
     restart: unless-stopped
     environment:
-      AUTH_SERVICE_URL: http://auth-service:8081
-      ROOM_SERVICE_URL: http://room-service:8082
-      COLLABORATION_SERVICE_URL: http://collaboration-service:8083
-      AI_SERVICE_URL: http://ai-service:8084
-      JWT_SECRET: ${JWT_SECRET}
+#      AUTH_SERVICE_URL: http://auth-service:8081
+#      ROOM_SERVICE_URL: http://room-service:8082
+#      COLLABORATION_SERVICE_URL: http://collaboration-service:8083
+#      AI_SERVICE_URL: http://ai-service:8084
+#      JWT_SECRET: ${JWT_SECRET}
       SERVER_PORT: 8080
     ports:
       - "8080:8080"
-    depends_on:
-      - auth-service
-      - room-service
-      - collaboration-service
-      - ai-service
+#    depends_on:
+#      - auth-service
+#      - room-service
+#      - collaboration-service
+#      - ai-service
     networks:
       - studyboard-network
 
