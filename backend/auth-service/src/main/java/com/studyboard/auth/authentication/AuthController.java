@@ -2,6 +2,7 @@ package com.studyboard.auth.authentication;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,11 +18,26 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest request){
-        return ResponseEntity.ok(service.register(request));
+        try {
+            service.register(request);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(new MessageResponse("User registered successfully"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ErrorResponse(e.getMessage()));
+        }
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request){
-        return ResponseEntity.ok(service.login(request));
+        try {
+            return ResponseEntity.ok(service.login(request));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new ErrorResponse("Invalid email or password"));
+        }
     }
+
+    record MessageResponse(String message){}
+    record ErrorResponse(String message){}
 }

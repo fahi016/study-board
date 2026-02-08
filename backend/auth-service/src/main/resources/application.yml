@@ -23,8 +23,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-#        jdbc:
-#          time_zone: Asia/Kolkata
+
 
 # =========================
 # JWT CONFIGURATION
@@ -43,3 +42,6 @@ logging:
 
 server:
   port: 8081
+  error:
+    include-message: always
+    include-binding-errors: always
